@@ -9,6 +9,8 @@
     <Prefer32Bit>true</Prefer32Bit>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Configurations>Debug;Release</Configurations>
+    <OutputPath>bin\\$(Configuration)\\</OutputPath>
     <ProjectGuid>{B7C2D1F0-7E1C-4A1A-9B1B-0D7B1A7F2A11}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
