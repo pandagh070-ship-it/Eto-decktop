@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -18,6 +19,7 @@ namespace ETODesktop
         private Button toggleBar;
         private Button startup;
         private Button close;
+        private ImageAnimator gifAnimator;
 
         public MainForm()
         {
@@ -59,6 +61,8 @@ namespace ETODesktop
             try {
                 using(var img=Image.FromFile(path))
                     wallpaper.Image=new Bitmap(img);
+                if (Path.GetExtension(path).Equals(".gif", StringComparison.OrdinalIgnoreCase))
+                    ImageAnimator.Animate(wallpaper.Image, (s,e) => wallpaper.Invalidate());
             } catch { wallpaper.Image=null; }
         }
 
