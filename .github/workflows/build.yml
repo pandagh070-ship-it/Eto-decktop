@@ -1,0 +1,28 @@
+name: Build ETO Desktop
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+      - name: Build
+        run: msbuild ETODesktop.sln /p:Configuration=Release /p:Platform="Any CPU"
+      - name: Package
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Copy-Item src\ETODesktop\bin\Release\ETODesktop.exe dist\ETODesktop.exe
+          Copy-Item README.md dist\README.txt
+          Compress-Archive -Path dist\* -DestinationPath ETODesktop-Windows.zip
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ETODesktop-Windows
+          path: ETODesktop-Windows.zip
